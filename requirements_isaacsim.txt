@@ -1,0 +1,6 @@
+isaacsim==5.1.0
+isaacsim-core==5.1.0
+isaacsim-robot==5.1.0
+isaacsim-sensor==5.1.0
+isaacsim-utils==5.1.0
+--extra-index-url https://pypi.nvidia.com
