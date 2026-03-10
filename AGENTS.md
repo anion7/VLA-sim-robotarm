@@ -2,25 +2,22 @@
 
 ## Cursor Cloud specific instructions
 
-### Repository State
+### Project Overview
 
-This repository (`VLA-sim-robotarm`) is currently a blank project stub containing only a `README.md`. There is no source code, no dependency manifests, no build system, no tests, and no runnable application.
+This repository contains **RT-2 (Robotics Transformer 2)**, a Vision-Language-Action model implementation in PyTorch. The model uses a ViTransformer encoder and an autoregressive Transformer decoder to translate vision + language inputs into robot action tokens.
 
-### Project Intent
+### Key Commands
 
-Per the README, the project targets **VLA (Vision-Language-Action) models** integrated with **NVIDIA Isaac Sim** for robot arm simulation. When code is added, expect:
+| Task | Command |
+|------|---------|
+| Install deps | `pip install -r requirements.txt && pip install pytest matplotlib datasets` |
+| Run tests | `python3 -m pytest tests/test.py -v` |
+| Run example | `python3 example.py` |
 
-- **Python** as the primary language (VLA models, Isaac Sim scripting).
-- Dependencies on **PyTorch** or similar ML frameworks for VLA model inference.
-- **NVIDIA Isaac Sim** (requires an NVIDIA GPU with RTX support and the Omniverse platform) — this cannot run on standard cloud VMs without GPU access.
-- Possible **ROS 2** integration for robot control messaging.
+### Important Gotchas
 
-### Environment Notes
-
-- Python 3.12 is available in the VM.
-- No GPU is available in the Cursor Cloud VM, so NVIDIA Isaac Sim and GPU-dependent ML inference cannot run here.
-- Once dependencies are added (e.g., `requirements.txt`, `pyproject.toml`), update the VM startup script accordingly.
-
-### Lint / Test / Build / Run
-
-No lint, test, build, or run commands exist yet. When they are added, document the commands here.
+- **No GPU required for CPU inference.** The model runs on CPU (slow but functional). No CUDA/GPU is available in the Cursor Cloud VM.
+- **`zetascale` API change:** The upstream `zetascale` package renamed `AutoregressiveWrapper` to `AutoRegressiveWrapper` (capital R). The import in `rt2/model.py` has been updated accordingly.
+- **Model output is a tuple:** `AutoRegressiveWrapper.forward()` returns `(logits, loss)`, not a single tensor. The `example.py` and `tests/test.py` have been updated to handle this.
+- **Undeclared transitive deps:** `matplotlib` and `datasets` are needed by `zetascale` at import time but are not listed in `requirements.txt`. They must be installed separately.
+- **PATH:** Scripts installed by pip go to `~/.local/bin`. Run `export PATH="$HOME/.local/bin:$PATH"` if needed, or use `python3 -m pytest` instead of bare `pytest`.
