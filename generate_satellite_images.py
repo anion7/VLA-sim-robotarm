@@ -22,6 +22,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 plt.rcParams['font.family'] = ['DejaVu Sans', 'sans-serif']
+plt.rcParams['font.size'] = 11
 
 # ─────────────────────────────────────────────────────────────
 # HELPERS
@@ -84,7 +85,7 @@ def draw_cuboid(ax, cx, cy, w, h, body_color, edge_color, depth_color=None, zord
 # ─────────────────────────────────────────────────────────────
 
 def draw_robotic_arm_base():
-    fig, ax = plt.subplots(figsize=(14, 8), dpi=150)
+    fig, ax = plt.subplots(figsize=(16, 9), dpi=150)
     dark_bg(fig, ax)
     ax.set_xlim(-1, 1)
     ax.set_ylim(-0.6, 0.6)
@@ -100,7 +101,7 @@ def draw_robotic_arm_base():
     earth2 = Ellipse((0.88, -0.45), 0.5, 0.33,
                      facecolor='#2060a0', edgecolor='none', alpha=0.3, zorder=1)
     ax.add_patch(earth2)
-    ax.text(0.88, -0.55, 'Earth', color='#88ccff', fontsize=7, ha='center', va='top', alpha=0.7, zorder=2)
+    ax.text(0.88, -0.55, 'Earth', color='#88ccff', fontsize=11, ha='center', va='top', alpha=0.7, zorder=2)
 
     # ══════════════════════════════════
     # CHASER spacecraft (left, golden)
@@ -114,7 +115,7 @@ def draw_robotic_arm_base():
     # Top panel (small)
     draw_solar_panel(ax, cx, cy + 0.16, 90, width=0.08, height=0.06)
     # Label
-    ax.text(cx, cy - 0.16, 'Chaser S/C', color='#ffd060', fontsize=9, ha='center', va='top',
+    ax.text(cx, cy - 0.16, 'Chaser S/C', color='#ffd060', fontsize=14, ha='center', va='top',
             fontweight='bold', zorder=10,
             path_effects=[pe.withStroke(linewidth=2, foreground='#05060f')])
 
@@ -136,10 +137,10 @@ def draw_robotic_arm_base():
                                  arrowstyle='->', color='#ff9040', lw=1.2,
                                  connectionstyle='arc3,rad=0.4', zorder=8)
     ax.add_patch(rot_arrow)
-    ax.text(tx+0.34, ty+0.20, 'tumbling', color='#ff9040', fontsize=7, ha='left', va='center',
+    ax.text(tx+0.34, ty+0.20, 'tumbling', color='#ff9040', fontsize=11, ha='left', va='center',
             style='italic', zorder=10,
             path_effects=[pe.withStroke(linewidth=1.5, foreground='#05060f')])
-    ax.text(tx, ty - 0.17, 'Target S/C (non-cooperative)', color='#90a8c8', fontsize=9,
+    ax.text(tx, ty - 0.17, 'Target S/C (non-cooperative)', color='#90a8c8', fontsize=14,
             ha='center', va='top', zorder=10,
             path_effects=[pe.withStroke(linewidth=2, foreground='#05060f')])
 
@@ -188,7 +189,7 @@ def draw_robotic_arm_base():
 
     # Arm label
     ax.text((j3[0]+j4[0])/2, j3[1]+0.07, '7-DOF Robotic Arm',
-            color='#d0d8f0', fontsize=8, ha='center', va='bottom',
+            color='#d0d8f0', fontsize=12, ha='center', va='bottom',
             path_effects=[pe.withStroke(linewidth=2, foreground='#05060f')], zorder=11)
     # Arrow pointing at arm
     ax.annotate('', xy=(j3[0], j3[1]+0.015), xytext=(j3[0], j3[1]+0.06),
@@ -198,12 +199,12 @@ def draw_robotic_arm_base():
     cap_circ = Circle((tx-0.11, ty+0.02), 0.10, fill=False, edgecolor='#60ff80',
                        linewidth=1.2, linestyle='--', alpha=0.8, zorder=8)
     ax.add_patch(cap_circ)
-    ax.text(tx-0.11, ty-0.11, 'Capture\nZone', color='#60ff80', fontsize=7, ha='center', va='top',
+    ax.text(tx-0.11, ty-0.11, 'Capture\nZone', color='#60ff80', fontsize=11, ha='center', va='top',
             path_effects=[pe.withStroke(linewidth=1.5, foreground='#05060f')], zorder=11)
 
     # Title
     ax.set_title('On-Orbit Servicing — Robotic Arm Capture Demonstration\n(Non-Cooperative Target)',
-                 color='white', fontsize=13, fontweight='bold', pad=12)
+                 color='white', fontsize=18, fontweight='bold', pad=12)
 
     plt.tight_layout()
     fig.savefig('/workspace/output_0_robotic_arm.png', dpi=150, bbox_inches='tight',
@@ -217,12 +218,12 @@ def draw_robotic_arm_base():
 # ─────────────────────────────────────────────────────────────
 
 def draw_geometric_cues():
-    fig = plt.figure(figsize=(14, 9), dpi=150)
+    fig = plt.figure(figsize=(16, 10.5), dpi=150)
     fig.patch.set_facecolor('#05060f')
 
     # 2×3 grid of sub-panels
-    gs = fig.add_gridspec(2, 3, hspace=0.42, wspace=0.35,
-                          left=0.04, right=0.97, top=0.88, bottom=0.06)
+    gs = fig.add_gridspec(2, 3, hspace=0.55, wspace=0.38,
+                          left=0.04, right=0.97, top=0.87, bottom=0.07)
 
     panel_titles = [
         'Edge Detection\n& Contour Lines',
@@ -266,7 +267,7 @@ def draw_geometric_cues():
             # Dashed edge lines on body
             ax.plot([-0.22, 0.22], [0, 0], color=acc, lw=0.6, ls='--', alpha=0.5, zorder=4)
             ax.plot([0, 0], [-0.18, 0.18], color=acc, lw=0.6, ls='--', alpha=0.5, zorder=4)
-            ax.text(0, -0.85, 'Canny / Sobel gradient edges', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, 'Canny / Sobel gradient edges', color=acc, fontsize=11, ha='center')
 
         elif idx == 1:  # Keypoint feature map
             for pts in [body, sp_l, sp_r]:
@@ -285,7 +286,7 @@ def draw_geometric_cues():
                 ax.annotate('', xy=(kx+0.09*np.cos(angle), ky+0.09*np.sin(angle)),
                             xytext=(kx, ky),
                             arrowprops=dict(arrowstyle='->', color=acc, lw=0.7), zorder=6)
-            ax.text(0, -0.85, 'ORB / SIFT feature descriptors', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, 'ORB / SIFT feature descriptors', color=acc, fontsize=11, ha='center')
 
         elif idx == 2:  # Point cloud
             for pts in [body, sp_l, sp_r]:
@@ -305,9 +306,9 @@ def draw_geometric_cues():
             ax.scatter(all_x, all_y, s=1.2, c=colors_pt, alpha=0.85, zorder=4)
             sm = plt.cm.ScalarMappable(cmap='plasma', norm=plt.Normalize(dist.min(), dist.max()))
             cbar = fig.colorbar(sm, ax=ax, fraction=0.03, pad=0.02)
-            cbar.set_label('range (m)', color='white', fontsize=6)
-            cbar.ax.yaxis.set_tick_params(color='white', labelsize=5, labelcolor='white')
-            ax.text(0, -0.85, 'LiDAR / depth point cloud', color=acc, fontsize=7, ha='center')
+            cbar.set_label('range (m)', color='white', fontsize=10)
+            cbar.ax.yaxis.set_tick_params(color='white', labelsize=9, labelcolor='white')
+            ax.text(0, -0.85, 'LiDAR / depth point cloud', color=acc, fontsize=11, ha='center')
 
         elif idx == 3:  # Bounding box
             for pts in [body, sp_l, sp_r]:
@@ -319,7 +320,7 @@ def draw_geometric_cues():
                                   boxstyle='square,pad=0', fill=False,
                                   edgecolor=acc, linewidth=1.5, linestyle='--', zorder=5)
             ax.add_patch(aabb)
-            ax.text(0.63, 0.21, 'AABB', color=acc, fontsize=7, va='bottom')
+            ax.text(0.63, 0.21, 'AABB', color=acc, fontsize=11, va='bottom')
             # OBB (rotated)
             angle_obb = 12
             obb = FancyBboxPatch((-0.60,-0.19),1.20,0.38,
@@ -328,12 +329,12 @@ def draw_geometric_cues():
                                  transform=(transforms.Affine2D().rotate_deg(angle_obb) + ax.transData),
                                  zorder=5)
             ax.add_patch(obb)
-            ax.text(0.50, -0.42, 'OBB', color='#ff9040', fontsize=7)
+            ax.text(0.50, -0.42, 'OBB', color='#ff9040', fontsize=11)
             # Corner markers
             corners = [(-0.62,-0.20),(-0.62,0.20),(0.62,0.20),(0.62,-0.20)]
             for c in corners:
                 ax.plot(*c, 's', color=acc, ms=4, zorder=6)
-            ax.text(0, -0.85, 'AABB / OBB object bounding box', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, 'AABB / OBB object bounding box', color=acc, fontsize=11, ha='center')
 
         elif idx == 4:  # Depth map
             for pts in [body, sp_l, sp_r]:
@@ -351,9 +352,9 @@ def draw_geometric_cues():
             im = ax.imshow(depth, extent=[-0.7,0.7,-0.25,0.25], cmap='RdYlBu_r',
                            vmin=0, vmax=1, alpha=0.85, zorder=3, aspect='auto')
             cb = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
-            cb.set_label('depth', color='white', fontsize=6)
-            cb.ax.yaxis.set_tick_params(color='white', labelsize=5, labelcolor='white')
-            ax.text(0, -0.85, 'Stereo / ToF depth image', color=acc, fontsize=7, ha='center')
+            cb.set_label('depth', color='white', fontsize=10)
+            cb.ax.yaxis.set_tick_params(color='white', labelsize=9, labelcolor='white')
+            ax.text(0, -0.85, 'Stereo / ToF depth image', color=acc, fontsize=11, ha='center')
 
         elif idx == 5:  # Wireframe matching
             for pts in [body, sp_l, sp_r]:
@@ -386,12 +387,12 @@ def draw_geometric_cues():
             for ox,oy,dx,dy in offsets:
                 ax.annotate('', xy=(ox+dx,oy+dy), xytext=(ox,oy),
                             arrowprops=dict(arrowstyle='->', color='#ff4040', lw=0.8), zorder=6)
-            ax.text(0, -0.85, 'CAD wireframe pose alignment', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, 'CAD wireframe pose alignment', color=acc, fontsize=11, ha='center')
 
-        ax.set_title(title, color=acc, fontsize=9, fontweight='bold', pad=4)
+        ax.set_title(title, color=acc, fontsize=14, fontweight='bold', pad=4)
 
     fig.suptitle('Geometric Cues for Non-Cooperative Target Grasping  |  几何线索',
-                 color='white', fontsize=14, fontweight='bold', y=0.96)
+                 color='white', fontsize=19, fontweight='bold', y=0.96)
 
     fig.savefig('/workspace/output_1_geometric_cues.png', dpi=150, bbox_inches='tight',
                 facecolor=fig.get_facecolor())
@@ -404,11 +405,11 @@ def draw_geometric_cues():
 # ─────────────────────────────────────────────────────────────
 
 def draw_physical_cues():
-    fig = plt.figure(figsize=(14, 9), dpi=150)
+    fig = plt.figure(figsize=(16, 10.5), dpi=150)
     fig.patch.set_facecolor('#05060f')
 
-    gs = fig.add_gridspec(2, 3, hspace=0.42, wspace=0.35,
-                          left=0.04, right=0.97, top=0.88, bottom=0.06)
+    gs = fig.add_gridspec(2, 3, hspace=0.55, wspace=0.38,
+                          left=0.04, right=0.97, top=0.87, bottom=0.07)
 
     panel_titles = [
         'Mass Distribution\n& CoM Estimation',
@@ -460,8 +461,8 @@ def draw_physical_cues():
             ax.plot(com_x, com_y, 'o', color=acc, ms=5, zorder=8)
             circ = Circle((com_x,com_y), 0.08, fill=False, edgecolor=acc, lw=1.0, ls='--', zorder=6)
             ax.add_patch(circ)
-            ax.text(com_x+0.10, com_y, 'CoM', color=acc, fontsize=8, va='center', fontweight='bold')
-            ax.text(0, -0.85, 'CoM offset from geometry centroid', color=acc, fontsize=7, ha='center')
+            ax.text(com_x+0.10, com_y, 'CoM', color=acc, fontsize=12, va='center', fontweight='bold')
+            ax.text(0, -0.85, 'CoM offset from geometry centroid', color=acc, fontsize=11, ha='center')
 
         elif idx == 1:  # Inertia principal axes
             for pts in [body_pts, sp_l_pts, sp_r_pts]:
@@ -481,12 +482,12 @@ def draw_physical_cues():
                 ax.annotate('', xy=(ox-dx*0.6, oy-dy*0.6), xytext=(ox+dx*0.2, oy+dy*0.2),
                             arrowprops=dict(arrowstyle='-|>', color=c, lw=1.8,
                                             mutation_scale=12), zorder=7)
-                ax.text(ox+dx*1.08, oy+dy*1.08, lbl, color=c, fontsize=7, ha='center')
+                ax.text(ox+dx*1.08, oy+dy*1.08, lbl, color=c, fontsize=11, ha='center')
             # Ellipsoidal inertia body
             ell = matplotlib.patches.Ellipse((0,0), 0.6, 0.45, fill=False,
                                               edgecolor='#6080c0', lw=0.8, ls=':', alpha=0.6, zorder=5)
             ax.add_patch(ell)
-            ax.text(0, -0.85, 'Inertia tensor principal axes', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, 'Inertia tensor principal axes', color=acc, fontsize=11, ha='center')
 
         elif idx == 2:  # Surface material / reflectance
             # Draw material zones
@@ -517,9 +518,9 @@ def draw_physical_cues():
                 mpatches.Patch(color='#1a3060', label='Solar cell'),
                 mpatches.Patch(color='#c09040', label='MLI blanket'),
             ]
-            ax.legend(handles=patches, loc='lower left', fontsize=6, facecolor='#10141f',
+            ax.legend(handles=patches, loc='lower left', fontsize=10, facecolor='#10141f',
                       labelcolor='white', edgecolor='#3050a0')
-            ax.text(0, -0.85, 'BRDF material zone classification', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, 'BRDF material zone classification', color=acc, fontsize=11, ha='center')
 
         elif idx == 3:  # Thermal IR map
             ax.fill(body_pts[:,0], body_pts[:,1], color='#0a0f1f', zorder=2)
@@ -539,11 +540,11 @@ def draw_physical_cues():
             im = ax.imshow(temp_masked, extent=[-0.7,0.7,-0.25,0.25], cmap='inferno',
                            vmin=50, vmax=350, alpha=0.9, zorder=3, aspect='auto')
             cb = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
-            cb.set_label('T (K)', color='white', fontsize=6)
-            cb.ax.yaxis.set_tick_params(color='white', labelsize=5, labelcolor='white')
+            cb.set_label('T (K)', color='white', fontsize=10)
+            cb.ax.yaxis.set_tick_params(color='white', labelsize=9, labelcolor='white')
             # Hot spot marker
-            ax.text(0.15, 0.10, '★', color='white', fontsize=10, ha='center', zorder=7)
-            ax.text(0, -0.85, 'IR thermal signature mapping', color=acc, fontsize=7, ha='center')
+            ax.text(0.15, 0.10, '★', color='white', fontsize=15, ha='center', zorder=7)
+            ax.text(0, -0.85, 'IR thermal signature mapping', color=acc, fontsize=11, ha='center')
 
         elif idx == 4:  # Solar radiation pressure
             for pts in [body_pts, sp_l_pts, sp_r_pts]:
@@ -553,7 +554,7 @@ def draw_physical_cues():
             # Sun direction
             ax.annotate('', xy=(0.68, 0.62), xytext=(0.90, 0.85),
                         arrowprops=dict(arrowstyle='->', color='#ffffa0', lw=2.0), zorder=6)
-            ax.text(0.90, 0.90, '☀ Sun', color='#ffffa0', fontsize=8, ha='center')
+            ax.text(0.90, 0.90, '☀ Sun', color='#ffffa0', fontsize=13, ha='center')
             # SRP force vectors on panels
             for px, py, sc in [(-0.42, 0, 0.5), (0.42, 0, 0.7)]:
                 fx = -0.18*sc; fy = -0.14*sc
@@ -562,8 +563,8 @@ def draw_physical_cues():
             # Resultant force
             ax.annotate('', xy=(-0.12, -0.22), xytext=(0.02, -0.02),
                         arrowprops=dict(arrowstyle='->', color='#ff6040', lw=2.0), zorder=7)
-            ax.text(-0.14, -0.28, 'F_srp', color='#ff6040', fontsize=8, ha='center')
-            ax.text(0, -0.85, 'Solar radiation pressure perturbation', color=acc, fontsize=7, ha='center')
+            ax.text(-0.14, -0.28, 'F_srp', color='#ff6040', fontsize=13, ha='center')
+            ax.text(0, -0.85, 'Solar radiation pressure perturbation', color=acc, fontsize=11, ha='center')
 
         elif idx == 5:  # Structural stiffness / grapple
             for pts in [body_pts, sp_l_pts, sp_r_pts]:
@@ -580,13 +581,13 @@ def draw_physical_cues():
                 ax.plot(gx, gy, 'D', color=acc, ms=6, zorder=7)
                 circ = Circle((gx,gy), 0.05, fill=False, edgecolor=acc, lw=1.0, zorder=6)
                 ax.add_patch(circ)
-            ax.text(0, 0.28, 'Grapple Fixtures', color=acc, fontsize=7, ha='center', zorder=8)
-            ax.text(0, -0.85, 'Structural load & grapple point map', color=acc, fontsize=7, ha='center')
+            ax.text(0, 0.28, 'Grapple Fixtures', color=acc, fontsize=11, ha='center', zorder=8)
+            ax.text(0, -0.85, 'Structural load & grapple point map', color=acc, fontsize=11, ha='center')
 
-        ax.set_title(title, color=acc, fontsize=9, fontweight='bold', pad=4)
+        ax.set_title(title, color=acc, fontsize=14, fontweight='bold', pad=4)
 
     fig.suptitle('Physical Cues for Non-Cooperative Target Grasping  |  物理线索',
-                 color='white', fontsize=14, fontweight='bold', y=0.96)
+                 color='white', fontsize=19, fontweight='bold', y=0.96)
 
     fig.savefig('/workspace/output_2_physical_cues.png', dpi=150, bbox_inches='tight',
                 facecolor=fig.get_facecolor())
@@ -599,11 +600,11 @@ def draw_physical_cues():
 # ─────────────────────────────────────────────────────────────
 
 def draw_state_cues():
-    fig = plt.figure(figsize=(14, 9), dpi=150)
+    fig = plt.figure(figsize=(16, 10.5), dpi=150)
     fig.patch.set_facecolor('#05060f')
 
-    gs = fig.add_gridspec(2, 3, hspace=0.42, wspace=0.35,
-                          left=0.04, right=0.97, top=0.88, bottom=0.06)
+    gs = fig.add_gridspec(2, 3, hspace=0.55, wspace=0.38,
+                          left=0.04, right=0.97, top=0.87, bottom=0.07)
 
     panel_titles = [
         'Angular Velocity\n& Tumble Axis',
@@ -653,14 +654,14 @@ def draw_state_cues():
             ax.annotate('', xy=(0.0, 0.68), xytext=(0,0),
                         arrowprops=dict(arrowstyle='->', color='#ffffa0', lw=2.0,
                                         mutation_scale=14), zorder=7)
-            ax.text(0.06, 0.72, 'ω', color='#ffffa0', fontsize=13, zorder=8)
-            ax.text(0, -0.85, 'ω ≈ 3.2 °/s  tumble period ≈ 112 s', color=acc, fontsize=7, ha='center')
+            ax.text(0.06, 0.72, 'ω', color='#ffffa0', fontsize=18, zorder=8)
+            ax.text(0, -0.85, 'ω ≈ 3.2 °/s  tumble period ≈ 112 s', color=acc, fontsize=11, ha='center')
 
         elif idx == 1:  # Relative position/velocity
             # Chaser (small)
             chaser = Circle((-0.55, -0.40), 0.08, facecolor='#c8a240', edgecolor='#e8c860', lw=0.8, zorder=4)
             ax.add_patch(chaser)
-            ax.text(-0.55, -0.53, 'Chaser', color='#c8a240', fontsize=7, ha='center')
+            ax.text(-0.55, -0.53, 'Chaser', color='#c8a240', fontsize=11, ha='center')
             # Target
             for pts, fc in [(body_pts,'#1a2030'),(sp_l_pts,'#141e2e'),(sp_r_pts,'#141e2e')]:
                 ax.fill(pts[:,0], pts[:,1], color=fc, zorder=3)
@@ -669,13 +670,13 @@ def draw_state_cues():
             # Relative position vector r
             ax.annotate('', xy=(0.0, 0.0), xytext=(-0.55, -0.40),
                         arrowprops=dict(arrowstyle='->', color=acc, lw=1.8, mutation_scale=12), zorder=7)
-            ax.text(-0.32, -0.28, 'r', color=acc, fontsize=12, fontweight='bold')
+            ax.text(-0.32, -0.28, 'r', color=acc, fontsize=17, fontweight='bold')
             # Velocity vector v_rel
             ax.annotate('', xy=(0.30, 0.20), xytext=(0.0, 0.0),
                         arrowprops=dict(arrowstyle='->', color='#60ff80', lw=1.5, mutation_scale=11), zorder=7)
-            ax.text(0.32, 0.24, 'v_rel', color='#60ff80', fontsize=8)
+            ax.text(0.32, 0.24, 'v_rel', color='#60ff80', fontsize=13)
             # Range label
-            ax.text(0, -0.85, '|r|=28 m,  |v|=0.12 m/s', color=acc, fontsize=7, ha='center')
+            ax.text(0, -0.85, '|r|=28 m,  |v|=0.12 m/s', color=acc, fontsize=11, ha='center')
 
         elif idx == 2:  # Attitude quaternion
             # Draw body frame axes
@@ -688,7 +689,7 @@ def draw_state_cues():
             for dx,dy,c,lbl in axes_info:
                 ax.annotate('', xy=(dx, dy), xytext=(0,0),
                             arrowprops=dict(arrowstyle='->', color=c, lw=1.8, mutation_scale=12), zorder=6)
-                ax.text(dx*1.15, dy*1.15, lbl, color=c, fontsize=8, ha='center')
+                ax.text(dx*1.15, dy*1.15, lbl, color=c, fontsize=12, ha='center')
             # Inertial frame (dashed)
             for dx,dy,c,lbl in [(0.42,-0.05,'#ff4040','x_i'),
                                   (0,0.32,'#40ff80','y_i'),(0.25,0.25,'#60d0ff','z_i')]:
@@ -698,8 +699,8 @@ def draw_state_cues():
             # Quaternion text
             q = np.array([0.707, 0.0, 0.0, 0.707])
             ax.text(0, -0.70, f'q = [{q[0]:.3f},  {q[1]:.3f},  {q[2]:.3f},  {q[3]:.3f}]',
-                    color='white', fontsize=7, ha='center', family='monospace')
-            ax.text(0, -0.85, 'Body-frame quaternion attitude estimate', color=acc, fontsize=7, ha='center')
+                    color='white', fontsize=11, ha='center', family='monospace')
+            ax.text(0, -0.85, 'Body-frame quaternion attitude estimate', color=acc, fontsize=11, ha='center')
 
         elif idx == 3:  # Trajectory prediction
             for pts, fc in [(body_pts,'#1a2030'),(sp_l_pts,'#141e2e'),(sp_r_pts,'#141e2e')]:
@@ -721,8 +722,8 @@ def draw_state_cues():
             ax.fill_between(tx_f, ty_f-sigma, ty_f+sigma, color=acc, alpha=0.15, zorder=3)
             # Current position marker
             ax.plot(tx_p[-1], ty_p[-1], 'o', color='white', ms=5, zorder=6)
-            ax.text(tx_p[-1]+0.07, ty_p[-1], 'now', color='white', fontsize=7)
-            ax.text(0, -0.85, 'Kalman-predicted trajectory ± 3σ', color=acc, fontsize=7, ha='center')
+            ax.text(tx_p[-1]+0.07, ty_p[-1], 'now', color='white', fontsize=11)
+            ax.text(0, -0.85, 'Kalman-predicted trajectory ± 3σ', color=acc, fontsize=11, ha='center')
 
         elif idx == 4:  # Approach corridor
             for pts, fc in [(body_pts,'#1a2030'),(sp_l_pts,'#141e2e'),(sp_r_pts,'#141e2e')]:
@@ -739,12 +740,12 @@ def draw_state_cues():
             koz = Circle((0,0), 0.32, fill=False, edgecolor='#ff4040',
                           lw=1.2, ls='--', alpha=0.7, zorder=5)
             ax.add_patch(koz)
-            ax.text(0, 0.34, 'KOZ', color='#ff4040', fontsize=7, ha='center')
+            ax.text(0, 0.34, 'KOZ', color='#ff4040', fontsize=11, ha='center')
             # Approach direction arrow
             ax.annotate('', xy=(-0.30, 0.0), xytext=(-0.75, 0.0),
                         arrowprops=dict(arrowstyle='->', color=acc, lw=2.0, mutation_scale=14), zorder=6)
-            ax.text(-0.54, 0.07, 'V-bar\napproach', color=acc, fontsize=7, ha='center')
-            ax.text(0, -0.85, 'Safe approach corridor & keep-out zone', color=acc, fontsize=7, ha='center')
+            ax.text(-0.54, 0.07, 'V-bar\napproach', color=acc, fontsize=11, ha='center')
+            ax.text(0, -0.85, 'Safe approach corridor & keep-out zone', color=acc, fontsize=11, ha='center')
 
         elif idx == 5:  # Docking port alignment
             for pts, fc in [(body_pts,'#1a2030'),(sp_l_pts,'#141e2e'),(sp_r_pts,'#141e2e')]:
@@ -754,7 +755,7 @@ def draw_state_cues():
             # Docking port
             port = Circle((0.22, 0.0), 0.055, facecolor='#304080', edgecolor=acc, lw=1.5, zorder=6)
             ax.add_patch(port)
-            ax.text(0.22, 0.10, 'Docking\nPort', color=acc, fontsize=6.5, ha='center')
+            ax.text(0.22, 0.10, 'Docking\nPort', color=acc, fontsize=11, ha='center')
             # Alignment cross-hair
             for r in [0.10, 0.18, 0.28]:
                 c = Circle((0.22, 0.0), r, fill=False, edgecolor=acc, lw=0.6, alpha=0.4, zorder=5)
@@ -767,13 +768,13 @@ def draw_state_cues():
             # Misalignment angle label
             ax.annotate('', xy=(0.22, 0.055), xytext=(0.22, 0.0),
                         arrowprops=dict(arrowstyle='->', color='#ffffa0', lw=1.0), zorder=7)
-            ax.text(0.34, 0.055, 'Δφ=4.2°', color='#ffffa0', fontsize=7)
-            ax.text(0, -0.85, 'Port alignment error & lateral offset', color=acc, fontsize=7, ha='center')
+            ax.text(0.34, 0.055, 'Δφ=4.2°', color='#ffffa0', fontsize=11)
+            ax.text(0, -0.85, 'Port alignment error & lateral offset', color=acc, fontsize=11, ha='center')
 
-        ax.set_title(title, color=acc, fontsize=9, fontweight='bold', pad=4)
+        ax.set_title(title, color=acc, fontsize=14, fontweight='bold', pad=4)
 
     fig.suptitle('State Cues for Non-Cooperative Target Grasping  |  状态线索',
-                 color='white', fontsize=14, fontweight='bold', y=0.96)
+                 color='white', fontsize=19, fontweight='bold', y=0.96)
 
     fig.savefig('/workspace/output_3_state_cues.png', dpi=150, bbox_inches='tight',
                 facecolor=fig.get_facecolor())
