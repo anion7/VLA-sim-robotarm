@@ -4,31 +4,47 @@
 
 ### Project Overview
 
-This repository contains **RT-2 (Robotics Transformer 2)**, a Vision-Language-Action model implementation in PyTorch, intended for integration with **NVIDIA Isaac Sim** for robot arm simulation.
+This repository contains two major components:
 
-### Python Environment
+1. **RT-2 (Robotics Transformer 2)** — A VLA model implementation at the repo root (`rt2/`).
+2. **NVIDIA Isaac GR00T N1.6** — An open VLA foundation model for generalist humanoid robots at `Isaac-GR00T/`.
 
-- A **Python 3.11** virtual environment lives at `.venv/` (required by Isaac Sim 5.1.0).
-- Always activate before running anything: `source .venv/bin/activate`
-- Python 3.11 is installed from `ppa:deadsnakes/ppa`. System Python is 3.12; do not use it for this project.
+### Environments
 
-### Key Commands
+There are **two separate Python virtual environments**:
+
+| Component | Venv | Python | Activate |
+|-----------|------|--------|----------|
+| RT-2 + Isaac Sim | `.venv/` (root) | 3.11 | `source .venv/bin/activate` |
+| Isaac GR00T | `Isaac-GR00T/.venv/` | 3.12 | `source Isaac-GR00T/.venv/bin/activate` |
+
+Always activate the correct venv before running commands for each component.
+
+### RT-2 Commands
 
 | Task | Command |
 |------|---------|
-| Activate venv | `source .venv/bin/activate` |
-| Install RT-2 deps | `pip install -r requirements.txt` |
-| Install Isaac Sim deps | `pip install -r requirements_isaacsim.txt` |
-| Install dev extras | `pip install pytest matplotlib datasets` |
-| Run tests | `python -m pytest tests/test.py -v` |
-| Run RT-2 example | `python example.py` |
-| Verify full env | `python verify_env.py` |
+| Install deps | `source .venv/bin/activate && pip install -r requirements.txt` |
+| Run tests | `source .venv/bin/activate && python -m pytest tests/test.py -v` |
+| Run example | `source .venv/bin/activate && python example.py` |
+
+### Isaac GR00T Commands
+
+| Task | Command |
+|------|---------|
+| Install deps | `cd Isaac-GR00T && uv sync && uv pip install -e .` |
+| Install dev extras | `cd Isaac-GR00T && uv pip install pytest pytest-timeout ruff` |
+| Run tests | `cd Isaac-GR00T && source .venv/bin/activate && python -m pytest tests/ -v -m "not gpu"` |
+| Lint | `cd Isaac-GR00T && source .venv/bin/activate && python -m ruff check gr00t/` |
+| Verify env | `cd Isaac-GR00T && source .venv/bin/activate && python -c "import gr00t; print('OK')"` |
 
 ### Important Gotchas
 
-- **NVIDIA Isaac Sim EULA:** On first import of `isaacsim`, a EULA prompt appears. Pipe `echo "Yes"` to accept non-interactively. Once accepted, it persists for the user profile.
-- **Isaac Sim submodules need GPU:** `isaacsim.core`, `isaacsim.robot`, etc. are Omniverse Kit extensions that load only with the Kit runtime + NVIDIA RTX GPU. The pip packages are installed for IDE support and type checking; actual simulation requires GPU hardware.
-- **`zetascale` API change:** `AutoregressiveWrapper` was renamed to `AutoRegressiveWrapper` in recent zetascale. The import in `rt2/model.py` is updated accordingly.
-- **Model output is a tuple:** `AutoRegressiveWrapper.forward()` returns `(logits, loss)`, not a single tensor.
-- **Undeclared transitive deps:** `matplotlib` and `datasets` are needed by `zetascale` at import time but not listed in `requirements.txt`. Install separately.
-- **click version pin:** `isaacsim-kernel` requires `click==8.1.7`. After installing RT-2 deps (which may pull a newer click), run `pip install click==8.1.7` to fix.
+- **Two separate venvs:** RT-2 uses `.venv/` at repo root (Python 3.11); GR00T uses `Isaac-GR00T/.venv/` (Python 3.12). Do not mix them.
+- **GR00T uses `uv`:** Dependencies are managed via `uv sync` (lockfile at `Isaac-GR00T/uv.lock`). Do NOT use `pip install` for GR00T deps; use `uv pip install` inside the GR00T dir.
+- **GPU required for model inference:** Both RT-2 (for production use) and GR00T require NVIDIA GPU for actual model inference. CPU mode works for imports, tests, and development.
+- **GR00T `flash-attn` and `tensorrt`:** These GPU-specific packages install via `uv sync` but require CUDA at runtime.
+- **NVIDIA Isaac Sim EULA:** On first import of `isaacsim`, pipe `echo "Yes"` to accept non-interactively.
+- **`zetascale` API:** `AutoregressiveWrapper` renamed to `AutoRegressiveWrapper`; model output is `(logits, loss)` tuple.
+- **GR00T external_dependencies:** The repo has git submodules for LIBERO, robocasa, etc. These are optional for core development; initialize with `git submodule update --init --recursive` if needed.
+- **ruff** is used for linting GR00T code (config in `Isaac-GR00T/pyproject.toml`).
